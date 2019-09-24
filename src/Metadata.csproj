@@ -24,7 +24,7 @@
     <PackageTags>LANDIS-II;Landis;Library;Metadata</PackageTags>
     <Description>Generates metadata for every extensions, generates log files.</Description>
     <PackageReleaseNotes>.NET Standard 2.0 update.</PackageReleaseNotes>
-    <FileVersion>7.0</FileVersion>
+    <FileVersion>2.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

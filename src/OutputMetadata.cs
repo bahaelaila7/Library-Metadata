@@ -31,8 +31,7 @@ namespace Landis.Library.Metadata
 
         public void RetriveFields(Type dataObjectType)
         {
-            //var dataObject = Activator.CreateInstance<T>();
-            var tpDataObject = dataObjectType;// dataObject.GetType();
+            var tpDataObject = dataObjectType;
             Fields.Clear();
             foreach (var property in tpDataObject.GetProperties())
             {
@@ -58,9 +57,7 @@ namespace Landis.Library.Metadata
                             else if (columnList)
                             {
                                 foreach (String columnName in ExtensionMetadata.ColumnNames)
-                                    //for (int i = 0; i < ExtensionMetadata.ColumnNames.Length; i++)
                                 {
-                                    //Fields.Add(new FieldMetadata { Name = (property.Name + ExtensionMetadata.ColumnNames[i]), Unit = ((DataFieldAttribute)attributes[0]).Unit, Desc = ((DataFieldAttribute)attributes[0]).Desc, Format = ((DataFieldAttribute)attributes[0]).Format });
                                     Fields.Add(new FieldMetadata { Name = (property.Name + columnName), Unit = ((DataFieldAttribute)attributes[0]).Unit, Desc = ((DataFieldAttribute)attributes[0]).Desc, Format = ((DataFieldAttribute)attributes[0]).Format });
                                 }
                             }
@@ -140,10 +137,3 @@ namespace Landis.Library.Metadata
 }
 
 
-//using (var stringwriter = new stringwriter())
-//using (var xmltextwriter = xmlwriter.create(stringwriter))
-//{
-//    xmldoc.writeto(xmltextwriter);
-//    xmltextwriter.flush();
-//    return stringwriter.getstringbuilder().tostring();
-//}

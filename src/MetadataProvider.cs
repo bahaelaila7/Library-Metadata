@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Xml;
+using System.IO;
 
 namespace Landis.Library.Metadata
 {
@@ -13,18 +14,6 @@ namespace Landis.Library.Metadata
 
         public MetadataProvider()
         {
-            //List<OutputMetadata> lst = new List<OutputMetadata>();
-            //lst.All<OutputMetadata>()
-            //IEnumerable<OutputMetadata> q = from l in lst select l;
-
-            //System.Data.datase
-            //OutputMetadata om = new OutputMetadata();
-            //om.GetType().Attributes();
-            //dynamic contact = new ExpandoObject();
-            //contact.Name = "";
-
-            
-            //IAppDomainSetup want To ceate as mataDataTable and use newRow() that returns a dynamic object of the type which is determined by the defined metaDataFields
         }
 
         public MetadataProvider(IMetadata metadata)
@@ -50,8 +39,9 @@ namespace Landis.Library.Metadata
             if (!System.IO.Directory.Exists(metadataFolderPath))
                 System.IO.Directory.CreateDirectory(metadataFolderPath);
 
-            if (!System.IO.Directory.Exists(metadataFolderPath + "\\" + folderName))
-                System.IO.Directory.CreateDirectory(metadataFolderPath + "\\" + folderName);
+            if (!System.IO.Directory.Exists(Path.Combine(metadataFolderPath, folderName)))
+                //System.IO.Directory.CreateDirectory(metadataFolderPath + "\\" + folderName);
+                System.IO.Directory.CreateDirectory(Path.Combine(metadataFolderPath, folderName));
             System.IO.StreamWriter file;
 
             try
@@ -77,14 +67,15 @@ namespace Landis.Library.Metadata
                     XmlNode fieldsNode = om.Get_Fields_XmlNode(outDoc);
                     outputNode.AppendChild(fieldsNode);
 
-                   
-                    file = new System.IO.StreamWriter(metadataFolderPath + "\\" + folderName + "\\" + om.Name + "_Metadata.xml", false);
+
+                    //file = new System.IO.StreamWriter(metadataFolderPath + "\\" + folderName + "\\" + om.Name + "_Metadata.xml", false);
+                    file = new System.IO.StreamWriter(Path.Combine(metadataFolderPath, folderName, om.Name + "_Metadata.xml"), false);
                     //string strMetadata = GetMetadataString();
                     file.WriteLine(outputMetadataNode.OuterXml);
                     file.Close();
                     file.Dispose();
 
-                    om.MetadataFilePath = metadataFolderPath + "\\" + folderName + "\\" + om.Name + "_Metadata.xml";
+                    om.MetadataFilePath = Path.Combine(metadataFolderPath, folderName, om.Name + "_Metadata.xml");
                 }
             }
             catch(InvalidCastException ex)
@@ -95,7 +86,7 @@ namespace Landis.Library.Metadata
 
 
             
-            file = new System.IO.StreamWriter(metadataFolderPath + "\\" + folderName + "\\" + fileName + ".xml", false);
+            file = new System.IO.StreamWriter(Path.Combine(metadataFolderPath, folderName, fileName + ".xml"), false);
             //string strMetadata = GetMetadataString();
             XmlNode metadataNode = doc.CreateElement("landisMetadata");
             metadataNode.AppendChild(((ExtensionMetadata)metadata).Get_XmlNode(doc));

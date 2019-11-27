@@ -7,7 +7,7 @@
     <AssemblyCompany>LANDIS-II Foundation</AssemblyCompany>
     <AssemblyProduct>Metadata.Properties</AssemblyProduct>
     <AssemblyCopyright>LANDIS-II Foundation</AssemblyCopyright>
-    <AssemblyVersion>2.0</AssemblyVersion>
+    <AssemblyVersion>2.1</AssemblyVersion>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Authors>LANDIS-II Foundation</Authors>
@@ -20,11 +20,11 @@
     <Authors>Landis-II-Foundation</Authors>
     <Product>Landis.Library.Metadata-v2</Product>
     <Copyright>Landis-II-Foundation</Copyright>
-    <Version>2.0</Version>
+    <Version>2.1</Version>
     <PackageTags>LANDIS-II;Landis;Library;Metadata</PackageTags>
     <Description>Generates metadata for every extensions, generates log files.</Description>
     <PackageReleaseNotes>.NET Standard 2.0 update.</PackageReleaseNotes>
-    <FileVersion>2.0</FileVersion>
+    <FileVersion>2.1</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -11,7 +11,7 @@ namespace Landis.Library.Metadata
     public class ExtensionMetadata: IMetadata
     {
         public string Name { get; set; }
-        public int TimeInterval { get; set; }  
+        public int TimeInterval { get; set; }
         public ScenarioReplicationMetadata ScenarioReplicationMetadata { get; set; }
         public List<OutputMetadata> OutputMetadatas { get; set; }
         private static ICore modelCore;

@@ -46,36 +46,39 @@ namespace Landis.Library.Metadata
 
             try
             {
-                foreach(OutputMetadata om in ((ExtensionMetadata)metadata).OutputMetadatas.Where(p=>p.Type == OutputType.Table))
+                if (metadata is ExtensionMetadata)
                 {
-                    XmlDocument outDoc = new XmlDocument();
-                    XmlNode outputMetadataNode = outDoc.CreateElement("landisMetadata");
-                    XmlNode outputNode = outDoc.CreateElement("output");
-                    outputMetadataNode.AppendChild(outputNode);
+                    foreach (OutputMetadata om in ((ExtensionMetadata)metadata).OutputMetadatas.Where(p => p.Type == OutputType.Table))
+                    {
+                        XmlDocument outDoc = new XmlDocument();
+                        XmlNode outputMetadataNode = outDoc.CreateElement("landisMetadata");
+                        XmlNode outputNode = outDoc.CreateElement("output");
+                        outputMetadataNode.AppendChild(outputNode);
 
-                    XmlNode extensionNode = outDoc.CreateElement("extension");
+                        XmlNode extensionNode = outDoc.CreateElement("extension");
 
-                    XmlAttribute outputExtNameAt = outDoc.CreateAttribute("name");
-                    outputExtNameAt.Value = ((ExtensionMetadata)metadata).Name;
-                    extensionNode.Attributes.Append(outputExtNameAt);
+                        XmlAttribute outputExtNameAt = outDoc.CreateAttribute("name");
+                        outputExtNameAt.Value = ((ExtensionMetadata)metadata).Name;
+                        extensionNode.Attributes.Append(outputExtNameAt);
 
-                    XmlAttribute pathAt = outDoc.CreateAttribute("metadataFilePath");
-                    pathAt.Value = fileName + ".xml";
-                    extensionNode.Attributes.Append(pathAt);
-                    outputNode.AppendChild(extensionNode);
+                        XmlAttribute pathAt = outDoc.CreateAttribute("metadataFilePath");
+                        pathAt.Value = fileName + ".xml";
+                        extensionNode.Attributes.Append(pathAt);
+                        outputNode.AppendChild(extensionNode);
 
-                    XmlNode fieldsNode = om.Get_Fields_XmlNode(outDoc);
-                    outputNode.AppendChild(fieldsNode);
+                        XmlNode fieldsNode = om.Get_Fields_XmlNode(outDoc);
+                        outputNode.AppendChild(fieldsNode);
 
 
-                    //file = new System.IO.StreamWriter(metadataFolderPath + "\\" + folderName + "\\" + om.Name + "_Metadata.xml", false);
-                    file = new System.IO.StreamWriter(Path.Combine(metadataFolderPath, folderName, om.Name + "_Metadata.xml"), false);
-                    //string strMetadata = GetMetadataString();
-                    file.WriteLine(outputMetadataNode.OuterXml);
-                    file.Close();
-                    file.Dispose();
+                        //file = new System.IO.StreamWriter(metadataFolderPath + "\\" + folderName + "\\" + om.Name + "_Metadata.xml", false);
+                        file = new System.IO.StreamWriter(Path.Combine(metadataFolderPath, folderName, om.Name + "_Metadata.xml"), false);
+                        //string strMetadata = GetMetadataString();
+                        file.WriteLine(outputMetadataNode.OuterXml);
+                        file.Close();
+                        file.Dispose();
 
-                    om.MetadataFilePath = Path.Combine(metadataFolderPath, folderName, om.Name + "_Metadata.xml");
+                        om.MetadataFilePath = Path.Combine(metadataFolderPath, folderName, om.Name + "_Metadata.xml");
+                    }
                 }
             }
             catch(InvalidCastException ex)
@@ -89,7 +92,16 @@ namespace Landis.Library.Metadata
             file = new System.IO.StreamWriter(Path.Combine(metadataFolderPath, folderName, fileName + ".xml"), false);
             //string strMetadata = GetMetadataString();
             XmlNode metadataNode = doc.CreateElement("landisMetadata");
-            metadataNode.AppendChild(((ExtensionMetadata)metadata).Get_XmlNode(doc));
+
+            if (metadata is ExtensionMetadata)
+            {
+                metadataNode.AppendChild(((ExtensionMetadata)metadata).Get_XmlNode(doc));
+            }
+            else if (metadata is CoreMetadata)
+            {
+                metadataNode.AppendChild(((CoreMetadata)metadata).Get_XmlNode(doc));
+            }
+
             file.WriteLine(metadataNode.OuterXml);
             file.Close();
             file.Dispose();

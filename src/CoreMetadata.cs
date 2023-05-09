@@ -12,7 +12,7 @@ namespace Landis.Library.Metadata
     {
         public string Version { get; set; }
 
-        public uint Seed { get; set; }
+        public uint? Seed { get; set; }
 
         public int Start { get; set; }
 
@@ -29,7 +29,7 @@ namespace Landis.Library.Metadata
             Extensions = new List<CoreExtensionMetadata>();
         }
 
-        public CoreMetadata(string version, uint seed, int start, int end, List<CoreExtensionMetadata> extensions, List<string> inputs)
+        public CoreMetadata(string version, uint? seed, int start, int end, List<CoreExtensionMetadata> extensions, List<string> inputs)
         {
             Version = version;
             Seed = seed;
@@ -49,9 +49,12 @@ namespace Landis.Library.Metadata
             nameAtt.Value = "LANDIS-II v" + this.Version;
             node.Attributes.Append(nameAtt);
 
-            XmlAttribute seedAtt = doc.CreateAttribute("seed");
-            seedAtt.Value = this.Seed.ToString();
-            node.Attributes.Append(seedAtt);
+            if (this.Seed != null)
+            {
+                XmlAttribute seedAtt = doc.CreateAttribute("seed");
+                seedAtt.Value = this.Seed.ToString();
+                node.Attributes.Append(seedAtt);
+            }
 
             XmlNode inputsColl = doc.CreateElement("inputs");
             int x = 1;

@@ -28,7 +28,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Landis.Core" Version="3.0.1" />
+        <!--<PackageReference Include="Landis.Core" Version="3.0.1" />-->
+        <ProjectReference Include="..\..\Library-Core\src\Core\Landis.Core.csproj" />
   </ItemGroup>
   
 </Project>
